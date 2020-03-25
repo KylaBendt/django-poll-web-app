@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+<h1>{{ category.category_text }}</h1>
+{% for question in category.question_set.all %}
+    <p><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></p>
+{% endfor %}
+
+<p><a href="{% url 'polls:index' %}">Home</a></p>
+
+</body>
+</html>

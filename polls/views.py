@@ -2,12 +2,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Question, Choice
+from .models import Question, Choice, Category
 
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
+    category_list = Category.objects.all()
+    context = {'latest_question_list': latest_question_list, 'category_list': category_list}
     return render(request, 'polls/index.html', context)
 
 
@@ -38,3 +39,9 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def categories(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    return render(request, 'polls/category.html', {'category': category})
+
